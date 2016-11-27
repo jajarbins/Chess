@@ -3,7 +3,6 @@ package isen.toison.chess.pieces;
 import isen.toison.chess.game.Board;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static isen.toison.chess.pieces.MoveType.*;
@@ -26,7 +25,7 @@ public class King extends Piece {
 	public List<Position> finalPositions(Position position, Board currentBoard) {
 		Position finalPosition = new Position();
 		List<Position> finalPositions = new ArrayList<>();
-		IsAbleToMove(finalPosition, currentBoard);
+		isAbleToMove(finalPosition, currentBoard);
 		if (this.alreadyMoved = false) {                                                                   //idée pour le rock
 			if (currentBoard.boardMatrix[0][finalPosition.line].getPiece().alreadyMoved = false) {         //rock
 				finalPosition.line = position.line;                                                       //rock
@@ -37,7 +36,7 @@ public class King extends Piece {
 	}
 
 	//movehelp
-	public List<Position> IsAbleToMove(Position finalPosition, Board currentBoard) {
+	public List<Position> isAbleToMove(Position finalPosition, Board currentBoard) {
 		int column = -1;
 		int line;
 		while (column <= 1) {

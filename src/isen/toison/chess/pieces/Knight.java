@@ -12,6 +12,9 @@ import static isen.toison.chess.pieces.MoveType.KNIGHT;
  */
 public class Knight extends Piece {
 
+    private int line;
+    private int column;
+
     //constructor
     public Knight(Color color, Position position) {
         super(color, position);
@@ -19,27 +22,23 @@ public class Knight extends Piece {
     }
 
     //finalpositions
-    public List<Position> finalPositions(Position position, Board currentBoard){
-        Position finalPosition=new Position();
+    public List<Position> finalPositions(Position finalPosition, Board currentBoard){
         List<Position> finalPositions = new ArrayList<>();
         int l;          //l pour ligne
         int c=-2;      //c pour colone
         while(c<=2){
             switch(c){
                 case -2 :
-                    IsAbleToMoveKnightHelp(1, c, finalPosition, currentBoard, finalPositions);
+                case 2 :
+                    line = 1;
+                    column = c;
+                    isAbleToMove(finalPosition, currentBoard);
                     break;
                 case -1 :
-                    IsAbleToMoveKnightHelp(2, c, finalPosition, currentBoard, finalPositions);
-                    break;
-                case 0 :
-                    c++;
-                    break;
                 case 1 :
-                    IsAbleToMoveKnightHelp(2, c, finalPosition, currentBoard, finalPositions);
-                    break;
-                case 2 :
-                    IsAbleToMoveKnightHelp(1, c, finalPosition, currentBoard, finalPositions);
+                    line = 2;
+                    column = c;
+                    isAbleToMove(finalPosition, currentBoard);
                     break;
             }
             c++;
@@ -60,11 +59,11 @@ public class Knight extends Piece {
         return finalPositions;
     }
 
-    public List<Position> IsAbleToMoveKnightHelp(int i, int c, Position finalPosition, Board currentBoard, List<Position> finalPositions){
-        finalPosition.line=position.line-i;
-        finalPosition.column=position.column+c;
+    public List<Position> isAbleToMove(Position finalPosition, Board currentBoard){
+        finalPosition.line=position.line-line;
+        finalPosition.column=position.column+column;
         IsAbleToMoveKingHelp(finalPosition, currentBoard, finalPositions);
-        finalPosition.line=position.line+i;
+        finalPosition.line=position.line+line;
         IsAbleToMoveKingHelp(finalPosition, currentBoard, finalPositions);
         return finalPositions;
     }

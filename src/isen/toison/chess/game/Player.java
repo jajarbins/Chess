@@ -11,14 +11,15 @@ import java.util.List;
  */
 public class Player {
     public Color color;
-    List<Piece> pieceOnBoardPlayer;
-
+    private Board board;
 
     //constructor
     public Player(Color color, Board board) {
         this.color = color;
-        this.pieceOnBoardPlayer=board.pieceOnBoardByColor(this.color);
+        this.board = board;
     }
-
+    public List<Piece> getPieceOnBoardPlayer() {
+        return board.pieceOnBoardByColor(this.color);
+    }
 
 }

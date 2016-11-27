@@ -9,7 +9,13 @@ public enum MoveType {
     KNIGHT,
     FOUL,
     QUEEN,
-    KING
+    KING;
+
+
+    @Override
+    public String toString() {
+        return super.toString().substring(0,1);
+    }
 }
 
 

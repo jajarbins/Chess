@@ -19,14 +19,43 @@ public class Board {
 	public Board() {
 	}
 
+	@Override
+	public String toString() {
+		String boardGraph = "";
+		for (int i = 0; i <= 7; i++){
+			for (int j = 0; j <= 7; j++) {
+				boardGraph += "|";
+				if (boardMatrix[i][j].isOccupied){
+					boardGraph += "[";
+					boardGraph += boardMatrix[i][j].getPiece().getMoveType().toString();
+					boardGraph += boardMatrix[i][j].getPiece().getColor() == White ? "w" : "b";
+					boardGraph += "]";
+				}
+				else boardGraph += "    ";
+				boardGraph += "|";
+			}
+			boardGraph += "  ";
+			for (int k = 0; k <= 7; k++) {
+				int line = boardMatrix[i][k].getPosition().line;
+				int column = boardMatrix[i][k].getPosition().column;
+				boardGraph += "|";
+				if (boardMatrix[i][k].isOccupied()) boardGraph += "[" + line + column + "]";
+				else boardGraph += " " + line + column + " ";
+				boardGraph += "|";
+			}
+			boardGraph += "\n";
+		}
+		return boardGraph;
+	}
+
 
 	//initialisation
 	public void initBoard() {
-		Position position = new Position();
 		int i, j;                   //j : longueur i :largeur
 		Color colorSwap = Color.Black;
 		for (j = 0; j <= 7; j++) {
 			for (i = 0; i <= 7; i++) {
+				Position position = new Position();
 				colorSwap = colorSwap == Color.Black ? Color.White : Color.Black;
 				position.line = j;
 				position.column = i;
@@ -127,6 +156,27 @@ public class Board {
 	//action pièce
 
 
+	//déplacement pièce
+	public boolean movePiece(Position oldPosition, final Position newPosition) {
+		Cell cellOldPos = boardMatrix[oldPosition.line][oldPosition.column];
+		Cell cellNewPos = boardMatrix[newPosition.line][newPosition.column];
+		Piece pieceToMove = cellOldPos.getPiece();
+		if (pieceToMove.isAbleToMove(newPosition, this)
+				.stream()
+				.anyMatch(finalPos -> finalPos.line == newPosition.line
+				&& finalPos.column == newPosition.column)){
+			//swap
+			if (cellNewPos.isOccupied) {
+				cellNewPos.getPiece().isOnBoard = false;
+			}
+			cellNewPos.setPiece(this.boardMatrix[oldPosition.column][oldPosition.line].getPiece());
+			cellOldPos.setPiece(null);
+
+			return true;
+		}
+
+		return false;
+	}
 
 	public void alreadymovedPionKingTower(Position newPosition, Board currentBoard) {
 		if (currentBoard.boardMatrix[newPosition.column][newPosition.line].getPiece().moveType == PION) {

@@ -20,7 +20,7 @@ public abstract class Piece {
 	public Position position;
 	public Boolean alreadyMoved;
 	public int numberPion;
-	List<Position> finalPositions;
+	List<Position> finalPositions = new ArrayList<>();
 
 	public Piece(Color color, Position position) {
 		this.color = color;
@@ -53,92 +53,11 @@ public abstract class Piece {
 	}
 
 
-	//déplacement pièce
-	public void move(Position oldPosition, Position newPosition, Board currentBoard) {
-		if (currentBoard.boardMatrix[newPosition.column][newPosition.line].isOccupied()) {
-			currentBoard.boardMatrix[newPosition.column][newPosition.line].getPiece().isOnBoard = false;
-
-		}
-		currentBoard.boardMatrix[newPosition.column][newPosition.line]
-				.setPiece(currentBoard.boardMatrix[oldPosition.column][oldPosition.line].getPiece());
-		currentBoard.boardMatrix[oldPosition.column][oldPosition.line].setPiece(null);
-	}
-
 	//finalPositionsPieces
-	public abstract List<Position> finalPositions(Position position, Board currentBoard);
+	public abstract List<Position> finalPositions(Position finalPosition, Board currentBoard);
 
 	//finalPositionsPieces Help
-	public abstract List<Position> IsAbleToMove(Position finalPosition, Board currentBoard);
-
-
-	public List<Position> IsAbleToMoveKnightHelp(int i, int c, Position finalPosition, Board currentBoard) {
-		finalPosition.line = position.line - i;
-		finalPosition.column = position.column + c;
-		IsAbleToMoveKingHelp(position, finalPosition, currentBoard);
-		finalPosition.line = position.line + i;
-		IsAbleToMoveKingHelp(position, finalPosition, currentBoard);
-		return finalPositions;
-	}
-
-	public List<Position> IsAbleToMoveKingHelp(Position position, Position finalPosition, Board currentBoard) {
-		while (true) {
-			if (finalPosition.line >= 0 || finalPosition.line <= 7) {
-				break;
-			}
-			if (finalPosition.column >= 0 || finalPosition.column <= 7) {
-				break;
-			}
-			if (currentBoard.boardMatrix[finalPosition.column][finalPosition.line].getPiece().color == this.color) {
-				break;
-			}
-			if (currentBoard.boardMatrix[finalPosition.column][finalPosition.line].getPiece().color != this.color &&             //si on "rencontre" le roi adverse, on renvoit une position négative
-					currentBoard.boardMatrix[finalPosition.column - 1][finalPosition.line + 1].getPiece().moveType == KING) {
-				Position echec = new Position(-1, -1);
-				finalPositions.add(echec);
-				break;
-			}
-			finalPositions.add(finalPosition);
-			if (currentBoard.boardMatrix[finalPosition.column][finalPosition.line].getPiece().color != this.color) {
-				break;
-			}
-		}
-		return finalPositions;
-	}
-
-	public List<Position> IsAbleToMovePionHelp(Position position, Position finalPosition, Board currentBoard) {
-		if (currentBoard.boardMatrix[position.column - 1][position.line + 1].getPiece().color != this.color
-				&& currentBoard.boardMatrix[finalPosition.column - 1][finalPosition.line + 1].getPiece().moveType == KING) {
-			Position echec = new Position(-1, -1);
-			finalPositions.add(echec);                                                                                       //si échec
-		}
-		if (currentBoard.boardMatrix[position.column + 1][position.line + 1].getPiece().color != this.color
-				&& currentBoard.boardMatrix[finalPosition.column - 1][finalPosition.line + 1].getPiece().moveType == KING) {
-			Position echec = new Position(-1, -1);
-			finalPositions.add(echec);                                                                                      //si échec
-		}
-
-		if (currentBoard.boardMatrix[position.column - 1][position.line + 1].getPiece().color != this.color) {
-			finalPositions.add(finalPosition);
-		}
-		if (currentBoard.boardMatrix[position.column + 1][position.line + 1].getPiece().color != this.color
-				&& currentBoard.boardMatrix[finalPosition.column - 1][finalPosition.line + 1].getPiece().moveType != KING) {
-			finalPositions.add(finalPosition);
-		}
-		if (finalPosition.line >= 0 || finalPosition.line <= 7) {
-			if (finalPosition.column >= 0 || finalPosition.column <= 7) {
-				if (!currentBoard.boardMatrix[finalPosition.column][finalPosition.line].isOccupied()) {
-					finalPositions.add(finalPosition);
-				}
-			}
-		}
-		return finalPositions;
-	} //ne fonctionne peut être pas
-
-	public List<Position> IsAbleToMovePionHelp2(int i, Position position, Position finalPosition, Board currentBoard) {
-		finalPosition.column = position.column + i;
-		IsAbleToMovePionHelp(position, finalPosition, currentBoard);
-		return (finalPositions);
-	}
+	public abstract List<Position> isAbleToMove(Position finalPosition, Board currentBoard);
 
 
 	// getters & Setters

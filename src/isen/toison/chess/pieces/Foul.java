@@ -22,28 +22,27 @@ public class Foul extends Piece {
     }
 
     //finalpositions
-    public List<Position> finalPositions(Position position, Board currentBoard){
-        Position finalPosition = new Position(position.line, position.column);
+    public List<Position> finalPositions(Position finalPosition, Board currentBoard){
         List<Position> finalPositions = new ArrayList<>();
         line = 1;
         column = 1;
-        IsAbleToMove(finalPosition, currentBoard);
+        isAbleToMove(finalPosition, currentBoard);
         line = -1;
         column = 1;
-        IsAbleToMove(finalPosition, currentBoard);
+        isAbleToMove(finalPosition, currentBoard);
         line = -1;
         column = -1;
-        IsAbleToMove(finalPosition, currentBoard);
+        isAbleToMove(finalPosition, currentBoard);
         line = 1;
         column = -1;
-        IsAbleToMove(finalPosition, currentBoard);
+        isAbleToMove(finalPosition, currentBoard);
 
         super.finalPositions = finalPositions;
         return finalPositions;
     }   //return the list of position where the fool can go
 
     //movehelp
-    public List<Position> IsAbleToMove(Position finalPosition, Board currentBoard) {
+    public List<Position> isAbleToMove(Position finalPosition, Board currentBoard) {
         while(true){
             if (line>0)   {finalPosition.line=position.line+line;}
             else{finalPosition.line=position.line-line;}

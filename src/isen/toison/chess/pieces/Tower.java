@@ -13,6 +13,8 @@ import static isen.toison.chess.pieces.MoveType.TOWER;
 public class Tower extends Piece{
 
     public Boolean alreadyMoved ;               //pour le rock qui reste à faire
+    private int line;
+    private int column;
 
     //constructor
     public Tower(Color color, Position position) {
@@ -25,17 +27,23 @@ public class Tower extends Piece{
     public List<Position> finalPositions(Position position, Board currentBoard) {
         Position finalPosition = new Position(position.line, position.column);
         List<Position> finalPositions = new ArrayList<>();
-        IsAbleToMoveFoulTowerQueen (0, 1, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (0, -1, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (1, 0, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (-1, 0, position, finalPosition, currentBoard, finalPositions);
+        line = 0;
+        column = 1;
+        isAbleToMove(finalPosition, currentBoard);
+        line = 0;
+        column = -1;
+        isAbleToMove(finalPosition, currentBoard);
+        line = 1;
+        column = 0;
+        isAbleToMove(finalPosition, currentBoard);
+        line = -1;
+        column = 0;
+        isAbleToMove(finalPosition, currentBoard);
         return finalPositions;
     }
 
     //movehelp
-    public List<Position> IsAbleToMoveFoulTowerQueen(int line, int column, Position position,
-                                                      Position finalPosition, Board currentBoard,
-                                                      List<Position> finalPositions) {
+    public List<Position> isAbleToMove(Position finalPosition, Board currentBoard) {
         while(true){
 
             if (line>0)   {finalPosition.line=position.line+line;}
