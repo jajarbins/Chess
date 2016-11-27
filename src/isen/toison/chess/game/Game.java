@@ -16,5 +16,7 @@ public class Game {
     public void initGame (){
         System.out.println("nom du joueur 1");
 
+
+
     }
 }

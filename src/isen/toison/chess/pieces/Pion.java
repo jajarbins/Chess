@@ -25,7 +25,7 @@ public class Pion extends Piece {
 
 
     //finalpositions
-    public List<Position> finalPositionsPion(Position position, Board currentBoard) {
+    public List<Position> finalPositions(Position position, Board currentBoard) {
         Position finalPosition = new Position(position.line, position.column);
         List<Position> finalPositions = new ArrayList<>();
         finalPosition.line = position.line;

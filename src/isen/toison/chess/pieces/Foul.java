@@ -12,6 +12,9 @@ import static isen.toison.chess.pieces.MoveType.FOUL;
  */
 public class Foul extends Piece {
 
+    private int line;
+    private int column;
+
     //constructor
     public Foul(Color color, Position position) {
         super(color, position);
@@ -19,24 +22,32 @@ public class Foul extends Piece {
     }
 
     //finalpositions
-    public List<Position> finalPositionsFoul(Position position, Board currentBoard){
+    public List<Position> finalPositions(Position position, Board currentBoard){
         Position finalPosition = new Position(position.line, position.column);
         List<Position> finalPositions = new ArrayList<>();
-        IsAbleToMoveFoulTowerQueen (1, 1, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (-1, 1, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (1, -1, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (-1, -1, position, finalPosition, currentBoard, finalPositions);
+        line = 1;
+        column = 1;
+        IsAbleToMove(finalPosition, currentBoard);
+        line = -1;
+        column = 1;
+        IsAbleToMove(finalPosition, currentBoard);
+        line = -1;
+        column = -1;
+        IsAbleToMove(finalPosition, currentBoard);
+        line = 1;
+        column = -1;
+        IsAbleToMove(finalPosition, currentBoard);
+
+        super.finalPositions = finalPositions;
         return finalPositions;
     }   //return the list of position where the fool can go
 
     //movehelp
-    public List<Position> IsAbleToMoveFoulTowerQueen (int line, int column, Position position,
-                                                      Position finalPosition, Board currentBoard,
-                                                      List<Position> finalPositions) {
+    public List<Position> IsAbleToMove(Position finalPosition, Board currentBoard) {
         while(true){
-
             if (line>0)   {finalPosition.line=position.line+line;}
             else{finalPosition.line=position.line-line;}
+
 
             if (column>0)   {finalPosition.column=position.column+column;}
             else{finalPosition.column=position.column-column;}

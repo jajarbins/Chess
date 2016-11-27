@@ -22,7 +22,7 @@ public class Tower extends Piece{
 
 
     //finalpositions
-    public List<Position> finalPositionsTower (Position position, Board currentBoard) {
+    public List<Position> finalPositions(Position position, Board currentBoard) {
         Position finalPosition = new Position(position.line, position.column);
         List<Position> finalPositions = new ArrayList<>();
         IsAbleToMoveFoulTowerQueen (0, 1, position, finalPosition, currentBoard, finalPositions);
@@ -33,7 +33,7 @@ public class Tower extends Piece{
     }
 
     //movehelp
-    public List<Position> IsAbleToMoveFoulTowerQueen (int line, int column, Position position,
+    public List<Position> IsAbleToMoveFoulTowerQueen(int line, int column, Position position,
                                                       Position finalPosition, Board currentBoard,
                                                       List<Position> finalPositions) {
         while(true){

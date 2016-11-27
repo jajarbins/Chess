@@ -19,7 +19,7 @@ public class Knight extends Piece {
     }
 
     //finalpositions
-    public List<Position> finalPositionsKnight(Position position, Board currentBoard){
+    public List<Position> finalPositions(Position position, Board currentBoard){
         Position finalPosition=new Position();
         List<Position> finalPositions = new ArrayList<>();
         int l;          //l pour ligne
@@ -59,6 +59,7 @@ public class Knight extends Piece {
         }
         return finalPositions;
     }
+
     public List<Position> IsAbleToMoveKnightHelp(int i, int c, Position finalPosition, Board currentBoard, List<Position> finalPositions){
         finalPosition.line=position.line-i;
         finalPosition.column=position.column+c;

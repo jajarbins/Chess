@@ -12,6 +12,9 @@ import static isen.toison.chess.pieces.MoveType.QUEEN;
  */
 public class Queen extends Piece {
 
+    private int line;
+    private int column;
+
     //constructor
     public Queen(Color color, Position position) {
         super(color, position);
@@ -19,28 +22,43 @@ public class Queen extends Piece {
     }
 
     //finalpositions
-    public List<Position> finalPositionsQueen (Position position, Board currentBoard) {
+    public List<Position> finalPositions(Position position, Board currentBoard) {
         Position finalPosition = new Position(position.line, position.column);
         List<Position> finalPositions = new ArrayList<>();
-        IsAbleToMoveFoulTowerQueen (0, 1, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (0, -1, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (1, 0, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (-1, 0, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (1, 1, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (-1, 1, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (1, -1, position, finalPosition, currentBoard, finalPositions);
-        IsAbleToMoveFoulTowerQueen (-1, -1, position, finalPosition, currentBoard, finalPositions);
+        line = 0;
+        column = 1;
+        IsAbleToMove(finalPosition, currentBoard);
+        line = 0;
+        column = -1;
+        IsAbleToMove(finalPosition, currentBoard);
+        line = 1;
+        column = 0;
+        IsAbleToMove(finalPosition, currentBoard);
+        line = -1;
+        column = 0;
+        IsAbleToMove(finalPosition, currentBoard);
+        line = 1;
+        column = 1;
+        IsAbleToMove(finalPosition, currentBoard);
+        line = -1;
+        column = 1;
+        IsAbleToMove(finalPosition, currentBoard);
+        line = 1;
+        column = -1;
+        IsAbleToMove(finalPosition, currentBoard);
+        line = -1;
+        column = -1;
+        IsAbleToMove(finalPosition, currentBoard);
         return finalPositions;
     }   //return the list of position where the Queen can go
 
     //movehelp
-    public List<Position> IsAbleToMoveFoulTowerQueen (int line, int column, Position position,
-                                                      Position finalPosition, Board currentBoard,
-                                                      List<Position> finalPositions) {
+    public List<Position> IsAbleToMove(Position finalPosition, Board currentBoard) {
         while(true){
 
             if (line>0)   {finalPosition.line=position.line+line;}
             else{finalPosition.line=position.line-line;}
+
 
             if (column>0)   {finalPosition.column=position.column+column;}
             else{finalPosition.column=position.column-column;}
